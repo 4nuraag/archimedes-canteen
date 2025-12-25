@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Archimedes Canteen</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=mobile_fix_4">
     <link
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap"
         rel="stylesheet">
@@ -19,25 +19,33 @@
         <div class="logo" onclick="showSection('home')" style="cursor: pointer;">
             <i class="fas fa-utensils"></i> Home
         </div>
+        <div class="menu-toggle" id="mobile-menu" onclick="toggleMobileMenu()">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
         <ul class="nav-links">
             <li class="dropdown">
-                <a href="#" class="dropbtn">Consumer <i class="fas fa-caret-down"></i></a>
+                <!-- Added onclick to toggle sub-menu on mobile -->
+                <a href="#" class="dropbtn" onclick="toggleMobileDropdown(event)">Consumer <i
+                        class="fas fa-caret-down"></i></a>
                 <div class="dropdown-content">
-                    <a href="#" onclick="showSection('consumer')">View Menu</a>
-                    <a href="#" onclick="showSection('consumer-wallet')">My Wallet</a>
-                    <a href="#" onclick="showSection('consumer-orders')">Order History</a>
-                    <a href="#" onclick="showSection('consumer-offers')">Offers</a>
+                    <a href="#" onclick="showSection('consumer'); closeMobileMenu()">View Menu</a>
+                    <a href="#" onclick="showSection('consumer-wallet'); closeMobileMenu()">My Wallet</a>
+                    <a href="#" onclick="showSection('consumer-orders'); closeMobileMenu()">Order History</a>
+                    <a href="#" onclick="showSection('consumer-offers'); closeMobileMenu()">Offers</a>
                 </div>
             </li>
             <li class="dropdown">
-                <a href="#" class="dropbtn">Vendor <i class="fas fa-caret-down"></i></a>
+                <a href="#" class="dropbtn" onclick="toggleMobileDropdown(event)">Vendor <i
+                        class="fas fa-caret-down"></i></a>
                 <div class="dropdown-content">
-                    <a href="#" onclick="showSection('vendor')">Modify Menu</a>
-                    <a href="#" onclick="showSection('vendor-wallet')">Vendor Wallet</a>
-                    <a href="#" onclick="showSection('vendor-orders')">Incoming Orders</a>
+                    <a href="#" onclick="showSection('vendor'); closeMobileMenu()">Modify Menu</a>
+                    <a href="#" onclick="showSection('vendor-wallet'); closeMobileMenu()">Vendor Wallet</a>
+                    <a href="#" onclick="showSection('vendor-orders'); closeMobileMenu()">Incoming Orders</a>
                 </div>
             </li>
-            <li><a href="#" onclick="showSection('about')">About Us</a></li>
+            <li><a href="#" onclick="showSection('about'); closeMobileMenu()">About Us</a></li>
         </ul>
     </nav>
 
@@ -402,6 +410,15 @@
             </div>
         </div>
         <button class="chat-trigger" onclick="toggleChat()"><i class="fas fa-comment-dots"></i></button>
+    </div>
+
+    <!-- Mobile Sticky Cart -->
+    <div id="sticky-cart-btn" class="sticky-cart hidden" onclick="scrollToCartMobile()">
+        <div class="cart-info">
+            <span id="sticky-count">0 Items</span>
+            <span id="sticky-total">₹0</span>
+        </div>
+        <span>View Cart <i class="fas fa-chevron-right"></i></span>
     </div>
 
     <script src="script.js"></script>

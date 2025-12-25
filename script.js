@@ -90,6 +90,10 @@ function updateTotals(subtotal) {
     subtotalEl.innerText = `₹${subtotal.toFixed(0)}`;
     taxEl.innerText = `₹${tax.toFixed(0)}`;
     totalEl.innerText = `₹${total.toFixed(0)}`;
+
+    // Update Mobile Sticky Cart
+    const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+    updateStickyCart(total, totalCount);
 }
 
 // Clear Cart
@@ -132,6 +136,68 @@ function showSection(sectionId) {
 
 function scrollToMenu() {
     showSection('consumer');
+}
+
+// Mobile Menu Logic
+function toggleMobileMenu() {
+    const navLinks = document.querySelector('.nav-links');
+    const menuToggle = document.querySelector('.menu-toggle');
+    navLinks.classList.toggle('active');
+    menuToggle.classList.toggle('active');
+}
+
+function closeMobileMenu() {
+    const navLinks = document.querySelector('.nav-links');
+    const menuToggle = document.querySelector('.menu-toggle');
+    navLinks.classList.remove('active');
+    menuToggle.classList.remove('active');
+
+    // Also close any open dropdowns
+    document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('active'));
+}
+
+function toggleMobileDropdown(event) {
+    event.preventDefault(); // Always prevent link click
+    event.stopPropagation(); // Stop bubbling
+    const dropdown = event.target.closest('.dropdown');
+
+    // Close other dropdowns
+    document.querySelectorAll('.dropdown').forEach(d => {
+        if (d !== dropdown) d.classList.remove('active');
+    });
+
+    const isActive = dropdown.classList.toggle('active');
+
+    // GHOST CLICK PREVENTION: Disable interaction for 400ms
+    if (isActive) {
+        const content = dropdown.querySelector('.dropdown-content');
+        if (content) {
+            content.style.pointerEvents = 'none';
+            setTimeout(() => {
+                content.style.pointerEvents = 'auto';
+            }, 400);
+        }
+    }
+}
+
+// Mobile Sticky Cart Logic
+function updateStickyCart(total, count) {
+    const stickyBtn = document.getElementById('sticky-cart-btn');
+    const countEl = document.getElementById('sticky-count');
+    const totalEl = document.getElementById('sticky-total');
+
+    if (count > 0 && window.innerWidth <= 768) {
+        stickyBtn.classList.remove('hidden');
+        countEl.innerText = `${count} Items`;
+        totalEl.innerText = `₹${total.toFixed(0)}`;
+    } else {
+        stickyBtn.classList.add('hidden');
+    }
+}
+
+function scrollToCartMobile() {
+    const cartSection = document.querySelector('.order-sidebar');
+    cartSection.scrollIntoView({ behavior: 'smooth' });
 }
 
 // Chat Bot Logic
