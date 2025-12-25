@@ -104,8 +104,10 @@ h6 {
     color: var(--primary-color);
 }
 
-.dropdown:hover .dropdown-content {
-    display: block;
+@media screen and (min-width: 769px) {
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
 }
 
 /* Home Section Container */
