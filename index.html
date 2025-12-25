@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Archimedes Canteen</title>
+    <link rel="stylesheet" href="styles.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo" onclick="showSection('home')" style="cursor: pointer;">
+            <i class="fas fa-utensils"></i> Home
+        </div>
+        <ul class="nav-links">
+            <li class="dropdown">
+                <a href="#" class="dropbtn">Consumer <i class="fas fa-caret-down"></i></a>
+                <div class="dropdown-content">
+                    <a href="#" onclick="showSection('consumer')">View Menu</a>
+                    <a href="#" onclick="showSection('consumer-wallet')">My Wallet</a>
+                    <a href="#" onclick="showSection('consumer-orders')">Order History</a>
+                    <a href="#" onclick="showSection('consumer-offers')">Offers</a>
+                </div>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropbtn">Vendor <i class="fas fa-caret-down"></i></a>
+                <div class="dropdown-content">
+                    <a href="#" onclick="showSection('vendor')">Modify Menu</a>
+                    <a href="#" onclick="showSection('vendor-wallet')">Vendor Wallet</a>
+                    <a href="#" onclick="showSection('vendor-orders')">Incoming Orders</a>
+                </div>
+            </li>
+            <li><a href="#" onclick="showSection('about')">About Us</a></li>
+        </ul>
+    </nav>
+
+    <!-- Home Section (Landing Page) -->
+    <div id="home-section" class="page-section active">
+        <!-- Hero Section -->
+        <header class="hero">
+            <div class="hero-content">
+                <h1>Archimedes<br><span>Canteen</span></h1>
+                <button class="btn-primary" onclick="showSection('consumer')">View Menu</button>
+            </div>
+        </header>
+
+        <!-- Footer -->
+        <footer class="home-footer">
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-vimeo-v"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+            </div>
+            <p>&copy; 2021 Archimedes Canteen. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <!-- Consumer Section (Menu Page) -->
+    <div id="consumer-section" class="page-section hidden">
+        <div class="main-container">
+            <!-- Menu Grid -->
+            <div class="menu-area">
+                <div class="menu-grid" id="menu-grid">
+                    <!-- Menu items will be injected here by JS -->
+                </div>
+
+                <!-- Filter Buttons -->
+                <div class="menu-filters">
+                    <button class="filter-btn active">STARTER</button>
+                    <button class="filter-btn">MAIN COURSE</button>
+                    <button class="filter-btn">DRINKS</button>
+                    <button class="filter-btn">DESSERTS</button>
+                </div>
+            </div>
+
+            <!-- Order Sidebar -->
+            <aside class="order-sidebar">
+                <div class="sidebar-header">
+                    <div class="order-title">
+                        <h3>ORDER #</h3>
+                        <span class="order-number">12564878</span>
+                    </div>
+                    <div class="order-meta">
+                        <span><i class="fas fa-user-friends"></i> GUEST: 2</span>
+                        <span><i class="far fa-square"></i> TABLE: 1</span>
+                    </div>
+                </div>
+
+                <div class="order-items" id="order-items">
+                    <!-- Cart items will be injected here -->
+                </div>
+
+                <div class="order-summary">
+                    <div class="summary-row">
+                        <span>SUBTOTAL</span>
+                        <span id="subtotal">₹0</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>SERVICE CHARGE 10%</span>
+                        <span id="tax">₹0</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>TOTAL</span>
+                        <span id="total">₹0</span>
+                    </div>
+                </div>
+
+                <div class="sidebar-actions">
+                    <button class="btn-cancel" onclick="clearCart()">CANCEL ORDER</button>
+                    <button class="btn-send" onclick="sendOrder()">SEND ORDER</button>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <!-- Vendor Dashboard (Hidden) -->
+    <div id="vendor-section" class="page-section hidden">
+        <div class="container section-container">
+            <h2><i class="fas fa-edit"></i> Modify Menu</h2>
+            <!-- Tabbed or Card Interface for Menu Items -->
+            <div class="dashboard-card full-width">
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Item Details</th>
+                            <th>Price</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="table-item-info">
+                                    <img src="biryani.png" alt="Biryani">
+                                    <span>Biryani</span>
+                                </div>
+                            </td>
+                            <td>₹200</td>
+                            <td><span class="status-badge available">Available</span></td>
+                            <td><button class="btn-icon"><i class="fas fa-pen"></i></button></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="table-item-info">
+                                    <img src="dosa.png" alt="Dosa">
+                                    <span>Masala Dosa</span>
+                                </div>
+                            </td>
+                            <td>₹70</td>
+                            <td><span class="status-badge available">Available</span></td>
+                            <td><button class="btn-icon"><i class="fas fa-pen"></i></button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Us (Hidden) -->
+    <div id="about-section" class="page-section hidden">
+        <div class="about-hero">
+            <div class="about-content">
+                <h2>Our Story</h2>
+                <p>Born from a passion for quality and convenience, Archimedes Canteen bridges the gap between hungry
+                    minds and delicious meals. We believe good food fuels great ideas.</p>
+
+                <div class="values-grid">
+                    <div class="value-card">
+                        <i class="fas fa-leaf"></i>
+                        <h3>Fresh</h3>
+                        <p>Sourced locally every day.</p>
+                    </div>
+                    <div class="value-card">
+                        <i class="fas fa-bolt"></i>
+                        <h3>Fast</h3>
+                        <p>Served in minutes, not hours.</p>
+                    </div>
+                    <div class="value-card">
+                        <i class="fas fa-heart"></i>
+                        <h3>Loved</h3>
+                        <p>Rated 4.8/5 by our community.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Consumer Wallet -->
+    <div id="consumer-wallet-section" class="page-section hidden">
+        <div class="container section-container">
+            <h2>My Wallet</h2>
+            <div class="wallet-layout">
+                <!-- Virtual Card -->
+                <div class="credit-card">
+                    <div class="card-chip"></div>
+                    <div class="card-balance">
+                        <span>Balance</span>
+                        <h3>₹1,250.00</h3>
+                    </div>
+                    <div class="card-number">**** **** **** 1234</div>
+                    <div class="card-holder">Consumer Name</div>
+                </div>
+
+                <!-- Actions -->
+                <button class="btn-add-money"><i class="fas fa-plus"></i> Add Money</button>
+
+                <!-- Transactions -->
+                <div class="transactions-list">
+                    <h3>Recent Transactions</h3>
+                    <div class="transaction-item">
+                        <div class="trans-icon debit"><i class="fas fa-utensils"></i></div>
+                        <div class="trans-details">
+                            <span class="trans-title">Order #12564870</span>
+                            <span class="trans-date">Today, 12:30 PM</span>
+                        </div>
+                        <span class="trans-amount debit">-₹450</span>
+                    </div>
+                    <div class="transaction-item">
+                        <div class="trans-icon credit"><i class="fas fa-wallet"></i></div>
+                        <div class="trans-details">
+                            <span class="trans-title">Wallet Top-up</span>
+                            <span class="trans-date">Yesterday, 10:00 AM</span>
+                        </div>
+                        <span class="trans-amount credit">+₹1000</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Consumer Orders -->
+    <div id="consumer-orders-section" class="page-section hidden">
+        <div class="container section-container">
+            <h2>Order History</h2>
+            <div class="order-list full-width">
+                <!-- Mock Order -->
+                <div class="history-item">
+                    <div class="history-header">
+                        <div class="history-id">
+                            <span class="order-id">#12564870</span>
+                            <span class="order-date">25 Dec 2024, 12:30 PM</span>
+                        </div>
+                        <span class="status-badge completed">Completed</span>
+                    </div>
+                    <div class="history-body">
+                        <div class="history-items">2x Biryani, 1x Coke</div>
+                        <div class="history-total">₹450</div>
+                    </div>
+                    <div class="history-footer">
+                        <button class="btn-outline-small">Reorder</button>
+                        <button class="btn-text-small">View Receipt</button>
+                    </div>
+                </div>
+                <!-- Mock Order 2 -->
+                <div class="history-item">
+                    <div class="history-header">
+                        <div class="history-id">
+                            <span class="order-id">#12564112</span>
+                            <span class="order-date">24 Dec 2024, 01:15 PM</span>
+                        </div>
+                        <span class="status-badge completed">Completed</span>
+                    </div>
+                    <div class="history-body">
+                        <div class="history-items">1x Masala Dosa, 1x Coffee</div>
+                        <div class="history-total">₹120</div>
+                    </div>
+                    <div class="history-footer">
+                        <button class="btn-outline-small">Reorder</button>
+                        <button class="btn-text-small">View Receipt</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Consumer Offers -->
+    <div id="consumer-offers-section" class="page-section hidden">
+        <div class="container section-container">
+            <h2>Exclusive Offers</h2>
+            <div class="offers-grid">
+                <div class="coupon-card">
+                    <div class="coupon-left">
+                        <span class="offer-val">50% OFF</span>
+                        <span class="offer-desc">On your first order</span>
+                    </div>
+                    <div class="coupon-right">
+                        <span class="coupon-code">FIRST50</span>
+                        <button class="btn-copy">Copy</button>
+                    </div>
+                </div>
+                <div class="coupon-card">
+                    <div class="coupon-left">
+                        <span class="offer-val">₹100 OFF</span>
+                        <span class="offer-desc">Orders above ₹500</span>
+                    </div>
+                    <div class="coupon-right">
+                        <span class="coupon-code">MEGA100</span>
+                        <button class="btn-copy">Copy</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Vendor Wallet -->
+    <div id="vendor-wallet-section" class="page-section hidden">
+        <div class="container section-container">
+            <h2>Vendor Wallet</h2>
+            <div class="wallet-layout">
+                <div class="credit-card vendor-card">
+                    <div class="card-chip"></div>
+                    <div class="card-balance">
+                        <span>Total Earnings</span>
+                        <h3>₹15,450.00</h3>
+                    </div>
+                    <div class="card-number">**** **** **** 9876</div>
+                    <div class="card-holder">Archimedes Kitchen</div>
+                </div>
+                <button class="btn-add-money vendor-btn"><i class="fas fa-arrow-down"></i> Withdraw Funds</button>
+
+                <!-- Transactions -->
+                <div class="transactions-list">
+                    <h3>Recent Payouts</h3>
+                    <div class="transaction-item">
+                        <div class="trans-icon credit"><i class="fas fa-bank"></i></div>
+                        <div class="trans-details">
+                            <span class="trans-title">Weekly Payout</span>
+                            <span class="trans-date">Yesterday</span>
+                        </div>
+                        <span class="trans-amount debit">-₹5,000</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Vendor Orders -->
+    <div id="vendor-orders-section" class="page-section hidden">
+        <div class="container section-container">
+            <h2>Incoming Orders</h2>
+            <div class="incoming-orders-grid">
+                <div class="incoming-order-card">
+                    <div class="order-header">
+                        <div>
+                            <h4>Order #12564878</h4>
+                            <span class="customer-name"><i class="fas fa-user"></i> John Doe | Table 5</span>
+                        </div>
+                        <span class="timer">05:30</span>
+                    </div>
+                    <ul class="item-list">
+                        <li>1x Biryani</li>
+                        <li>2x Roti</li>
+                    </ul>
+                    <div class="actions">
+                        <button class="btn-accept">Accept</button>
+                        <button class="btn-reject">Reject</button>
+                    </div>
+                </div>
+                <div class="incoming-order-card">
+                    <div class="order-header">
+                        <div>
+                            <h4>Order #12564999</h4>
+                            <span class="customer-name"><i class="fas fa-user"></i> Alice Smith | Table 2</span>
+                        </div>
+                        <span class="timer critical">01:15</span>
+                    </div>
+                    <ul class="item-list">
+                        <li>3x Masala Dosa</li>
+                    </ul>
+                    <div class="actions">
+                        <button class="btn-accept">Accept</button>
+                        <button class="btn-reject">Reject</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chat Bot -->
+    <div class="chatbot-container">
+        <div class="chat-window hidden" id="chat-window">
+            <div class="chat-header">
+                <h4>Chat Support</h4>
+                <button onclick="toggleChat()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="chat-messages">
+                <div class="msg bot">Hello! How can I help you today?</div>
+            </div>
+            <div class="chat-input">
+                <input type="text" placeholder="Type a message...">
+                <button><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+        <button class="chat-trigger" onclick="toggleChat()"><i class="fas fa-comment-dots"></i></button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
